@@ -87,6 +87,74 @@ void addBinary(char *s, char *s1, char *s2)
     }
 }
 
+
+void add_bignumber(char *s, char *s1, char *s2)
+{
+	char x[1000000];
+	int l1, l2, l;
+	int i, tmp, carry;
+	
+	l1 = strlen(s1);
+	l2 = strlen(s2);
+	carry = 0;
+	l = 0;
+	
+	while(l1 > 0 && l2 > 0)
+	{
+		tmp = s1[--l1] + s2[--l2] - 2 * '0' + carry;
+		if(tmp < 10)
+		{
+			carry = 0;
+			x[l++] = tmp + '0';
+		}
+		else
+		{
+			carry = 1;
+			x[l++] = tmp % 10 + '0';
+		}
+	}
+	while(l1 > 0)
+	{
+		tmp = s1[--l1] - '0' + carry;
+		if(tmp < 10)
+		{
+			x[l++] = tmp + '0';
+			carry = 0;	
+		}
+		else
+		{
+			x[l++] = tmp % 10 + '0';
+			carry = 1;	
+		}
+	}
+	while(l2 > 0)
+	{
+		tmp = s2[--l2] - '0' + carry;
+		if(tmp < 10)
+		{
+			x[l++] = tmp + '0';
+			carry = 0;	
+		}
+		else
+		{
+			x[l++] = tmp % 10 + '0';
+			carry = 1;	
+		}		
+	}
+	if(carry)
+	{
+		x[l++] = '1';
+	}
+	
+    for(i = 0; i < l; i++)
+    {
+        s[l-i-1] = x[i];
+        //s[i] = x[i];
+    }
+    s[l] = '\0';
+}
+
+
 int main(void)
 {
     char s1[] = "100001100011111";
